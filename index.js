@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atur Keuangan By ZalOfficial</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  @keyframes glow-border {
+    0% {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 5px rgba(153, 85, 204, 0.7),
+        0 0 15px rgba(153, 85, 204, 0.4);
+    }
+    50% {
+      border-color: rgba(255, 255, 255, 0.9);
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.9),
+        0 0 20px rgba(153, 85, 204, 1);
+    }
+    100% {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 5px rgba(153, 85, 204, 0.7),
+        0 0 15px rgba(153, 85, 204, 0.4);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    background: #0a0a0a;
+    font-family: 'Poppins', sans-serif;
+    color: #eee;
+    text-align: center;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #aa66ff;
+    text-shadow:
+      0 0 10px #b886ff,
+      0 0 25px #9b44ff;
+    margin-bottom: 20px;
+  }
+
+  .container {
+    max-width: 420px;
+    margin: 30px auto 50px;
+    padding: 20px;
+  }
+
+  .box {
+    background: #121212; /* gelap, hampir hitam */
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border: 2.5px solid rgba(255, 255, 255, 0.2);
+    animation: glow-border 3s ease-in-out infinite;
+    box-shadow:
+      inset 0 0 10px rgba(255, 255, 255, 0.07);
+  }
+
+  input[type="number"] {
+    width: 100%;
+    padding: 14px 18px;
+    margin: 12px 0 18px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    background: #1e1e1e;
+    color: #ddd;
+    box-shadow:
+      inset 0 0 14px rgba(255,255,255,0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  input[type="number"]:focus {
+    outline: none;
+    box-shadow:
+      inset 0 0 18px #c0aaff,
+      0 0 20px #bb99ff;
+  }
+
+  button {
+    width: 100%;
+    padding: 16px 0;
+    margin: 10px 0;
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #e6dfff;
+    background: linear-gradient(135deg, #6e3ab6, #9a64ff);
+    cursor: pointer;
+    box-shadow:
+      0 0 18px #8f6fe8,
+      inset 0 0 14px #b49aff;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  button:hover {
+    background: linear-gradient(135deg, #9a64ff, #b68fff);
+    box-shadow:
+      0 0 28px #b699ff,
+      inset 0 0 22px #c3afff;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  button:active {
+    transform: translateY(1px);
+  }
+
+  #saldo {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #c6aaff;
+    text-shadow:
+      0 0 14px #c0aaff,
+      0 0 30px #aa66ff;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .transaction-item {
+    background: #1b1b1b;
+    padding: 12px 18px;
+    margin: 10px 0;
+    border-radius: 14px;
+    font-size: 15px;
+    box-shadow:
+      inset 0 0 14px rgba(255, 255, 255, 0.12);
+    text-align: left;
+    color: #ddd;
+    user-select: text;
+  }
+
+  .pemasukan {
+    color: #7ade7a; /* hijau lembut */
+    font-weight: 700;
+    text-shadow: 0 0 7px #68c768;
+  }
+  .pengeluaran {
+    color: #ff6c6c; /* merah lembut */
+    font-weight: 700;
+    text-shadow: 0 0 7px #de4949;
+  }
+
+  /* Kalkulator */
+  #calcDisplay {
+    width: 100%;
+    font-size: 22px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    border: none;
+    background: #1f1f1f;
+    color: #ddd;
+    box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.2);
+    text-align: right;
+    user-select: none;
+  }
+
+  #calcButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .calc-btn {
+    width: 22%;
+    margin: 6px 5px;
+    padding: 18px 0;
+    font-size: 20px;
+    border-radius: 14px;
+    background: #553388;
+    color: #d4caff;
+    font-weight: 700;
+    box-shadow:
+      0 0 15px #9161db;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.25s ease;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+  }
+  .calc-btn:hover {
+    background: #7755bb;
+    box-shadow: 0 0 28px #b8aaff;
+    color: #fff;
+    border-color: #cdbaff;
+  }
+  .calc-btn:active {
+    transform: translateY(1px);
+  }
+</style>
+</head>
+<body>
+
+<div id="home" class="container">
+  <h1>Profit The End</h1>
+  <div class="box">
+    <h2 id="saldo">Saldo: Rp 0</h2>
+    <input type="number" id="pemasukan" placeholder="Tambah Pemasukan" min="0" />
+    <button onclick="tambahPemasukan()">Tambah Pemasukan</button>
+    <input type="number" id="pengeluaran" placeholder="Tambah Pengeluaran" min="0" />
+    <button onclick="tambahPengeluaran()">Tambah Pengeluaran</button>
+  </div>
+  <div class="box">
+    <button onclick="showPage('riwayat')">Riwayat Transaksi</button>
+    <button onclick="showPage('kalkulator')">Kalkulator</button>
+  </div>
+</div>
+
+<div id="riwayat" class="container hidden">
+  <h1>Riwayat Transaksi</h1>
+  <div id="listRiwayat"></div>
+  <button onclick="showPage('home')">Kembali</button>
+</div>
+
+<div id="kalkulator" class="container hidden">
+  <h1>Kalkulator</h1>
+  <input type="text" id="calcDisplay" disabled />
+  <div id="calcButtons"></div>
+  <button onclick="showPage('home')">Kembali</button>
+</div>
+
+<script>
+  let saldo = 0;
+  let riwayat = [];
+
+  function updateSaldo() {
+    document.getElementById("saldo").innerText = `Saldo: Rp ${saldo.toLocaleString()}`;
+  }
+
+  function tambahPemasukan() {
+    let jumlah = parseInt(document.getElementById("pemasukan").value);
+    if (!isNaN(jumlah) && jumlah > 0) {
+      saldo += jumlah;
+      riwayat.push({
+        jenis: "Pemasukan",
+        jumlah,
+        waktu: getWaktu(),
+      });
+      updateSaldo();
+      document.getElementById("pemasukan").value = "";
+    }
+  }
+
+  function tambahPengeluaran() {
+    let jumlah = parseInt(document.getElementById("pengeluaran").value);
+    if (!isNaN(jumlah) && jumlah > 0) {
+      saldo -= jumlah;
+      riwayat.push({
+        jenis: "Pengeluaran",
+        jumlah,
+        waktu: getWaktu(),
+      });
+      updateSaldo();
+      document.getElementById("pengeluaran").value = "";
+    }
+  }
+
+  function getWaktu() {
+    let now = new Date();
+    let hari = now.toLocaleDateString("id-ID", { weekday: "long" });
+    let tanggal = now.toLocaleDateString("id-ID");
+    let jam = now.toLocaleTimeString("id-ID");
+    return `${hari}, ${tanggal} - ${jam} WIB`;
+  }
+
+  function showRiwayat() {
+    let container = document.getElementById("listRiwayat");
+    container.innerHTML = "";
+    riwayat.forEach((r) => {
+      let div = document.createElement("div");
+      div.className = `transaction-item ${
+        r.jenis === "Pemasukan" ? "pemasukan" : "pengeluaran"
+      }`;
+      div.innerText = `${r.waktu} | ${r.jenis}: Rp ${r.jumlah.toLocaleString()}`;
+      container.appendChild(div);
+    });
+  }
+
+  function showPage(page) {
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("riwayat").classList.add("hidden");
+    document.getElementById("kalkulator").classList.add("hidden");
+
+    document.getElementById(page).classList.remove("hidden");
+
+    if (page === "riwayat") showRiwayat();
+  }
+
+  // Kalkulator
+  let calcButtons = [
+    "7",
+    "8",
+    "9",
+    "÷",
+    "4",
+    "5",
+    "6",
+    "×",
+    "1",
+    "2",
+    "3",
+    "-",
+    "0",
+    ".",
+    "=",
+    "+",
+    "C",
+    "⌫",
+  ];
+  let calcDisplay = document.getElementById("calcDisplay");
+  let btnContainer = document.getElementById("calcButtons");
+
+  calcButtons.forEach((txt) => {
+    let btn = document.createElement("button");
+    btn.innerText = txt;
+    btn.className = "calc-btn";
+    btn.onclick = () => handleCalc(txt);
+    btnContainer.appendChild(btn);
+  });
+
+  function handleCalc(value) {
+    if (value === "C") {
+      calcDisplay.value = "";
+    } else if (value === "⌫") {
+      calcDisplay.value = calcDisplay.value.slice(0, -1);
+    } else if (value === "=") {
+      try {
+        let expression = calcDisplay.value.replace(/×/g, '*').replace(/÷/g, '/');
+        calcDisplay.value = eval(expression) ?? "";
+      } catch {
+        calcDisplay.value = "Error";
+      }
+    } else {
+      calcDisplay.value += value;
+    }
+  }
+
+  updateSaldo();
+</script>
+
+</body>
+</html>
