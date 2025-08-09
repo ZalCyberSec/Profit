@@ -56,7 +56,7 @@
   }
 
   .box {
-    background: #121212; /* gelap, hampir hitam */
+    background: #121212;
     border-radius: 16px;
     padding: 20px 25px;
     margin-bottom: 25px;
@@ -143,12 +143,12 @@
   }
 
   .pemasukan {
-    color: #7ade7a; /* hijau lembut */
+    color: #7ade7a;
     font-weight: 700;
     text-shadow: 0 0 7px #68c768;
   }
   .pengeluaran {
-    color: #ff6c6c; /* merah lembut */
+    color: #ff6c6c;
     font-weight: 700;
     text-shadow: 0 0 7px #de4949;
   }
@@ -235,6 +235,23 @@
   let saldo = 0;
   let riwayat = [];
 
+  // Ambil data dari localStorage saat halaman dimuat
+  window.onload = () => {
+    const savedSaldo = localStorage.getItem("saldo");
+    const savedRiwayat = localStorage.getItem("riwayat");
+
+    saldo = savedSaldo ? parseInt(savedSaldo) : 0;
+    riwayat = savedRiwayat ? JSON.parse(savedRiwayat) : [];
+
+    updateSaldo();
+  };
+
+  // Simpan data ke localStorage
+  function simpanData() {
+    localStorage.setItem("saldo", saldo);
+    localStorage.setItem("riwayat", JSON.stringify(riwayat));
+  }
+
   function updateSaldo() {
     document.getElementById("saldo").innerText = `Saldo: Rp ${saldo.toLocaleString()}`;
   }
@@ -249,6 +266,7 @@
         waktu: getWaktu(),
       });
       updateSaldo();
+      simpanData(); // simpan setelah update
       document.getElementById("pemasukan").value = "";
     }
   }
@@ -263,6 +281,7 @@
         waktu: getWaktu(),
       });
       updateSaldo();
+      simpanData(); // simpan setelah update
       document.getElementById("pengeluaran").value = "";
     }
   }
@@ -346,8 +365,6 @@
       calcDisplay.value += value;
     }
   }
-
-  updateSaldo();
 </script>
 
 </body>
